@@ -4,15 +4,11 @@ require 'pry'
 
 class SpotifyChart
 
-  attr_reader :base_url
-
-  def initialize
-    @base_url = "http://charts.spotify.com/api/charts/"
-  end
+  BASE_URL = "http://charts.spotify.com/api/tracks/"
 
   def get_url(preference, region)
     # return a string that is the base url + / + preference + / + region + / + latest
-    pref_url = "#{@base_url}#{preference}/#{region}/latest"
+    pref_url = "#{BASE_URL}#{preference}/#{region}/weekly/latest"
   end
 
   def get_json(url)
@@ -75,6 +71,11 @@ class SpotifyChart
     
     # finally, call on fetch_track_album_artist using the 
     # hash that get_json returns
+    str = get_url("most_shared", region)
+
+    hsh = get_json(str)
+
+    track = fetch_track_album_artist(hsh)
   end
 
 end
